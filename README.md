@@ -88,4 +88,70 @@
 ```
 
 # React hooks form
-👆 Менеджер форм на неконтролируемых инпутах
+👆 Менеджер форм на неконтролируемых и контролируемых инпутах
+
+🎯 Работа с не контролируемым полем ведеться путем регистрации рефа, и сохранением его статуса в глобальном стейте формы  
+
+🔹 Подключение неконтролируемого компонента  
+```js
+const {
+    handleSubmit,
+    register
+} = useForm()
+
+return (<form onSubmit={handleSubmit} >
+    <input {...register('firstName')} />    
+</form>)
+```
+
+🔹 Подключение контролируемого компонента
+```js
+const { control } = useForm();
+
+return (
+    <Controller
+        render={({ field }) => <MyInput {...field} />}
+        name="firstName"
+        control={control}
+        defaultValue=""
+    />
+);
+```
+
+🔹 Подписка на обновление других инпутов
+```js
+const {
+    register,
+    watch,
+    formState: { errors },
+    handleSubmit
+} = useForm();
+
+const watchAllFields = watch(); // 👉🏼 Содержит в себе актуальное значение всех полей
+const watchAge = watch("age"); // 👉🏼 Содержит в себе актуальное значение конкретного поля
+
+
+console.log("watchAllFields", watchAllFields);
+console.log("watchAge", watchAge);
+
+return (
+    <form onSubmit={handleSubmit}>
+        <input
+            type="text"
+            {...register("name", { required: true, maxLength: 50 })}
+        />
+        <input
+            type="number"
+            {...register("age", { required: true })}
+        />
+    </form>
+    );
+```
+
+🔹 Вывести ошибку
+```js
+const { register, formState: { errors } } = useForm();
+
+<input {...register("name", { required: true })} />
+{errors.name && <span>This field is required</span>}
+```

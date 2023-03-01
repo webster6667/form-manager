@@ -29,6 +29,7 @@ export const Button = styled.button<Omit<ButtonProps, 'label'>>`
   font-weight: 400;
   color: ${({theme}) => theme.palette.colors.quinary};
   cursor: pointer;
+  opacity: ${({ disabled }) => disabled ? '0.5' : '1'};
 
   border-radius: ${({theme}) => theme.radius.md};
   border: 1px solid;

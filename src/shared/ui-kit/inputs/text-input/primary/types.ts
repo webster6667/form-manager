@@ -6,7 +6,7 @@ let PrimaryInputSizeList: 'sm' | 'md'
 
 export type PrimaryInputChangeHandler = (value: string, e: ChangeEvent<HTMLInputElement> | MouseEvent) => void
 
-export interface PrimaryTextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'type'> {
+export interface PrimaryTextInputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type'> {
     /**
      * Input type
      */
@@ -34,7 +34,7 @@ export interface PrimaryTextInputProps extends Omit<InputHTMLAttributes<HTMLInpu
     /**
      * Input value change handler
      */
-    onChange?: (value: string, e: ChangeEvent<HTMLInputElement> | MouseEvent) => void
+    // onChange?: (value: string, e: ChangeEvent<HTMLInputElement> | MouseEvent) => void
     /**
      * Input left icon
      */

@@ -1,4 +1,5 @@
 import React, {FC, ChangeEventHandler} from "react";
+import {useSwitch} from "@hook"
 import {Wrapper, Input, Label, InputWrapper, Error, IconWrapper } from "./styles"
 import {PrimaryTextInputProps} from "./types"
 
@@ -6,7 +7,6 @@ import {PrimaryTextInputProps} from "./types"
  * Primary text input
  */
 export const PrimaryTextInput:FC<PrimaryTextInputProps> = ({
-   value= '',
    label = 'placeholder',
    error,
    sizeMod= 'md',
@@ -16,10 +16,23 @@ export const PrimaryTextInput:FC<PrimaryTextInputProps> = ({
    // onChange,
    ...props
 })  => {
-    const isInputFilled = String(value).length > 0,
+    const [isInputFilled, setInputFilled, setInputEmpty] = useSwitch(String(props.value || '').length > 0),
           hasError = error && error.length > 0,
           hasLeftIcon = Boolean(LeftIcon),
-          hasRightIcon = Boolean(RightIcon)
+          hasRightIcon = Boolean(RightIcon),
+          changeEventHandler: ChangeEventHandler<HTMLInputElement> = (e) => {
+              let value = e.target.value
+
+              if (isInputFilled && value.length === 0) {
+                  setInputEmpty()
+              }
+
+              if (!isInputFilled && value.length > 0) {
+                  setInputFilled()
+              }
+
+              props.onChange && props.onChange(e)
+          }
 
     return (<Wrapper className={className} >
         <InputWrapper>
@@ -29,13 +42,11 @@ export const PrimaryTextInput:FC<PrimaryTextInputProps> = ({
             {hasRightIcon && <IconWrapper position='right' sizeMod={sizeMod} >
                 {typeof RightIcon === 'function' ? RightIcon() : RightIcon}
             </IconWrapper>}
-            {/*@ts-ignore*/}
+
             <Input
                 {...props}
-                //@ts-ignore
-                // onChange={inputChangeHandler}
+                onChange={changeEventHandler}
                 autoComplete={'off'}
-                value={value}
                 isInputFilled={isInputFilled}
                 sizeMod={sizeMod}
                 hasError={hasError}

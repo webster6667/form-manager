@@ -39,6 +39,7 @@ module.exports = {
 	devtool: isDev ? 'source-map' : false,
 	entry: ['@babel/polyfill', './index.tsx'],
 	output: {
+		publicPath: '/',
 		filename: getFileNameByMode('js'),
 		path: getFileRelativeConfigFile( 'dist')
 	},
@@ -48,7 +49,10 @@ module.exports = {
 	},
 	optimization: optimizationSettingsByMode,
 	devServer: {
-		overlay: true
+		overlay: true,
+		// TODO: Why was src/index.tsx?
+		contentBase: 'src/',
+		historyApiFallback: true,
 	},
 	plugins: [
 		...defaultPlugins

@@ -31,6 +31,7 @@
       "@common-types": ["src/types.ts"],
       "@shared/*": ["src/shared/*"],
       "@form-manager": ["src/shared/lib/form-manager"],
+      "@form-manager-hook-form": ["src/shared/lib/form-manager-hook-form"],
 
       "@fonts/*": ["src/assets/fonts/*"],
       "@icons/*": ["src/assets/img/icons/*"],
